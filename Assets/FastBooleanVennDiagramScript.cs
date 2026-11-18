@@ -275,13 +275,15 @@ public class FastBooleanVennDiagramScript : MonoBehaviour {
     }
 #pragma warning disable 414
     private bool TwitchPlaysActive;
-    private readonly string TwitchHelpMessage = @"!{0} activate [Activates the module.] | !{0} O/<ABCD> [Selects a sector corresponding to sections A, B, C, D; order does not matter. Multiple sectors can be chained with spaces.]";
+    private string[] activateCmds = new[] { "activate", "start", "go", "begin" };
+    private readonly string TwitchHelpMessage = @"!{0} activate/start/go/begin [Activates the module.] | !{0} O/<ABCD> [Selects a sector corresponding to sections A, B, C, D; order does not matter. Multiple sectors can be chained with spaces.]";
 #pragma warning restore 414
 
     private IEnumerator ProcessTwitchCommand(string command)
     {
         string[] commands = command.ToUpperInvariant().Split(' ');
-        if (command.Trim().EqualsIgnoreCase("activate"))
+        var cmdTrim = command.Trim();
+        if (activateCmds.Any(cmdTrim.EqualsIgnoreCase))
         {
             if (timerRunning)
             {
